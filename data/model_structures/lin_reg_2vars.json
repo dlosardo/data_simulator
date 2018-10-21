@@ -1,0 +1,1 @@
+{"unconditional_variables": {"variables": [{"x1": {"mean": "2", "variance": ".4"}}, {"x2": {"mean": "1", "variance": "1.1"}}], "covariances": {"x1": {"x2": ".3"}}}, "conditional_variables": {"variables": [{"y1": {"mean": "1.2", "variance": ".4"}}], "covariances": [], "structural_relations": {"y1": {"x1": ".5", "x2": "-2"}}}}
