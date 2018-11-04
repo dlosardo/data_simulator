@@ -8,7 +8,25 @@ from data_simulator.simulate.link_functions import inv_logit, identity
 from data_simulator.simulate.matrix_functions import set_matrices
 
 
-class ModelNames(Enum):
+class Types(Enum):
+
+    @classmethod
+    def values_list(cls):
+        return [type_.value for type_ in list(cls)]
+
+    @classmethod
+    def names_list(cls):
+        return [type_.name.lower() for type_ in list(cls)]
+
+    @classmethod
+    def tuple_pair(cls):
+        return list(zip(map(lambda x: str(x),
+                            cls.values_list()),
+                        map(lambda x: x.replace("_", " "),
+                            cls.names_list())))
+
+
+class ModelNames(Types):
     LINEAR_REGRESSION = 1
     LOGISTIC_REGRESSION = 2
 
