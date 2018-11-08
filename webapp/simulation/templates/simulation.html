@@ -5,41 +5,39 @@
 
 {% if model_type_form %}
 <p>Select model type </p>
-<form method="POST" action="{{ url_for('simulation.model_type') }}">
+<form method="POST">
         {{ model_type_form.hidden_tag() }}
         {% for f in model_type_form.model_type_form if f.widget.input_type != 'hidden' %}
             {{ form_macro.form_builder(f) }}
         {% endfor %}
-    </form>
+</form>
 {% endif %}
-
 {% if pop_val_form %}
     <p> {{ model_type }} model with {{ nx }} X variables and {{ ny }} Y
         variables. <p>
     <p>input population generating values </p>
-    <form method="POST" action="{{ url_for('simulation.pop_vals') }}">
+    <form method="POST">
         {{ pop_val_form.hidden_tag() }}
-        <div class="row">
-            {% for f in pop_val_form.x_means if f.widget.input_type != 'hidden' %}
-                <div class="one-twelvth col">
-                    {{ form_macro.form_builder(f) }}
-                </div>
+            {% for ff in pop_val_form if ff.widget.input_type not in ['submit',
+            'hidden'] and ff.name != 'x_varcovs'%}
+                    <div class="row">
+                        {% for f in ff%}
+                            <div class="one-twelvth col">
+                                {{ form_macro.form_builder(f) }}
+                            </div>
+                        {% endfor %}
+                    </div>
             {% endfor %}
-        </div>
-        <div class="row">
-            {% for f in pop_val_form.y_means if f.widget.input_type != 'hidden' %}
+        {% for i in range(1, nx+1) %}
+          <div class="row">
+              {% for j in range(1, i+1) %}
                 <div class="one-twelvth col">
-                    {{ form_macro.form_builder(f) }}
+                    {{
+                    form_macro.form_builder(pop_val_form.x_varcovs[form_macro.set_cov_var('x', i, j)]) }}
                 </div>
-            {% endfor %}
-        </div>
-        <div class="row">
-            {% for f in pop_val_form.parms if f.widget.input_type != 'hidden' %}
-                <div class="one-twelvth col">
-                    {{ form_macro.form_builder(f) }}
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
         {{form_macro.form_builder(pop_val_form.submit_pop_vals)}}
     </form>
 {% endif %}

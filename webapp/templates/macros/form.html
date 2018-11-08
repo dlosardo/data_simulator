@@ -7,3 +7,7 @@
       {% endfor %}
   </ul>
 {%- endmacro -%}
+
+{%- macro set_cov_var(var, i, j) -%}
+    {{var}}{{i}}_with_{{var}}{{j}}
+{%- endmacro -%}
